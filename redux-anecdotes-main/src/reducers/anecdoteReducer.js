@@ -1,3 +1,5 @@
+import anecdotes from "../services/anecdotes";
+
 const anecdotesAtStart = [
   "If it hurts, do it more often",
   "Adding manpower to a late software project makes it later!",
@@ -19,8 +21,11 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject);
 
-const anecdoteReducer = (state = initialState, action) => {
+const anecdoteReducer = (state = [], action) => {
   switch (action.type) {
+    case "INIT_ANECDOTES":
+      return action.data;
+
     case "VOTE": {
       const id = action.data;
       const anecdoteToVote = state.find((anecdote) => anecdote.id === id);
@@ -28,11 +33,11 @@ const anecdoteReducer = (state = initialState, action) => {
         ...anecdoteToVote,
         votes: anecdoteToVote.votes + 1,
       };
-
       return state.map((anecdote) =>
         anecdote.id !== id ? anecdote : changedAnecdote
       );
     }
+
     case "ADD_ANECDOTE":
       return [...state, action.data];
 
@@ -56,6 +61,13 @@ export const createAnecdote = (content) => {
       id: getId(),
       votes: 0,
     },
+  };
+};
+
+export const initializeAnecdotes = (anecdotes) => {
+  return {
+    type: "INIT_ANECDOTES",
+    data: anecdotes,
   };
 };
 
