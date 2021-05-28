@@ -7,9 +7,9 @@ import {
 } from "../reducers/notificationReducer";
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => state.anecdotes);
-  const filter = useSelector((state) => state.filter.filter);
   const dispatch = useDispatch();
+  const filter = useSelector((state) => state.filter.filter);
+  const anecdotes = useSelector((state) => state.anecdotes);
 
   const vote = ({ id, content }) => {
     dispatch(voteAnecdote(id));
