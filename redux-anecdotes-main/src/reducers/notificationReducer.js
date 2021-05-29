@@ -3,7 +3,7 @@ const initialState = { message: "" };
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SHOW_NOTIFICATION": {
-      return action.data.message;
+      return action.data;
     }
 
     case "HIDE_NOTIFICATION": {
@@ -15,16 +15,17 @@ const notificationReducer = (state = initialState, action) => {
   }
 };
 
-export const showNotification = (message) => {
-  return {
-    type: "SHOW_NOTIFICATION",
-    data: { message },
-  };
-};
-
-export const hideNotification = () => {
-  return {
-    type: "HIDE_NOTIFICATION",
+export const showNotification = (message, time) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "SHOW_NOTIFICATION",
+      data: { message },
+    });
+    setTimeout(() => {
+      dispatch({
+        type: "HIDE_NOTIFICATION",
+      });
+    }, time * 1000);
   };
 };
 
