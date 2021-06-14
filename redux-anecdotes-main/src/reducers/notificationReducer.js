@@ -16,12 +16,15 @@ const notificationReducer = (state = initialState, action) => {
 };
 
 export const showNotification = (message, time) => {
+  window.clearTimeout(window.notification);
+
   return async (dispatch) => {
     dispatch({
       type: "SHOW_NOTIFICATION",
       data: { message },
     });
-    setTimeout(() => {
+
+    window.notification = setTimeout(() => {
       dispatch({
         type: "HIDE_NOTIFICATION",
       });
